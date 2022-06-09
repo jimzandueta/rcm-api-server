@@ -35,11 +35,11 @@ $ npm run test
 ## Questions:
 1.How long it took youcomplete the work?
 ```sh
-# Total of 7~ hours including research and documentation. 
+# Total of 8~ hours including research and documentation. 
 // 2~ hours spent reviewing Typescript. I have not used TS in a while and I wanted to translate my typical Controller-Model-Services project setup effectively in TS.
 // 30~ minutes spent reading on JEST. Have not implemented unit testing for some time, needed to brush up on JEST.
 // 30~ minutes spent reading on Swagger for API documentation. Looked up proper Swagger format since I can not recall it from memory. 
-// 4~ hours actual development, testing, and documentation.
+// 5~ hours actual development, testing, and documentation.
 ```
 
 
@@ -50,7 +50,11 @@ $ npm run test
 
 3.If you did use a database for this project,what kind would you use and why?
 ```
-I'll use NoSQL, specifically MongoDB, because development will be much faster. It's ideal for Agile development because developers can make changes to the database without having to ask database administrators (as with SQL) or worry about reloading data. Its JSON object structure also makes it much easier to manage with NodeJS as your backend. Because it is so similar to Javascript, the learning curve is not too steep.
+I'll use NoSQL, specifically MongoDB, because development will be much faster. 
+It's ideal for Agile development because developers can make changes to the database 
+without having to ask database administrators (as with SQL) or worry about reloading data. 
+Its JSON object structure also makes it much easier to manage with NodeJS as your backend. 
+Because it is so similar to Javascript, the learning curve is not too steep.
 ```
 
 4.Can you give me an example of how you would delete color from the database?
