@@ -12,7 +12,7 @@ class AnimalController {
 
       res.status(200).json({ data: findAllAnimals, message: 'allAnimals' });
     } catch (error) {
-      next(error);
+      next(error.message);
     }
   };
 
@@ -22,7 +22,7 @@ class AnimalController {
 
       res.status(200).json({ data: getRandomAnimal, message: 'randomAnimal' });
     } catch (error) {
-      next(error);
+      next(error.message);
     }
   };
 
@@ -33,29 +33,30 @@ class AnimalController {
 
       res.status(201).json({ data: createAnimalData, message: 'createdAnimal' });
     } catch (error) {
-      next(error);
+      next(error.message);
     }
   };
 
   public updateAnimal = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
+      const id = Number(req.params.id);
       const animalData: CreateAnimalDto = req.body;
-      const updateAnimalData: Animal = await this.animalService.updateAnimal(animalData);
+      const updateAnimalData: Animal = await this.animalService.updateAnimal(id, animalData);
 
       res.status(200).json({ data: updateAnimalData, message: 'updatedAnimal' });
     } catch (error) {
-      next(error);
+      next(error.message);
     }
   };
 
   public deleteAnimal = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const animalData: CreateAnimalDto = req.body;
-      const deleteAnimalData: Animal[] = await this.animalService.deleteAnimal(animalData);
+      const id = Number(req.params.id);
+      const deleteAnimalData: Animal = await this.animalService.deleteAnimal(id);
 
       res.status(200).json({ data: deleteAnimalData, message: 'deletedAnimal' });
     } catch (error) {
-      next(error);
+      next(error.message);
     }
   };
 }

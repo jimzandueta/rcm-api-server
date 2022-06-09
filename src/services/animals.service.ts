@@ -25,37 +25,45 @@ class AnimalService {
     if (!Array.isArray(animalData)) throw new Error('animalData is not a list');
 
     for (let i = 0; i < animalData.length; i++) {
-      const findAnimal: Animal | undefined = this.animals.find(animal => animal.animal === animalData.animal);
-      if (findAnimal) throw new Error(`Animal '${animalData.animal}' is already listed`);
+      const findAnimal: Animal = this.animals.find(animal => animal.animal === animalData[i].animal);
+      if (findAnimal) throw new Error(`Animal '${animalData[i].animal}' is already listed`);
     }
 
-    const createAnimalData: Animal[] = animalData;
+    const createAnimalData: Animal[] = [];
+    for (let i = 0; i < animalData.length; i++) {
+      createAnimalData.push({
+        id: this.animals.length + i + 1,
+        animal: animalData[i].animal,
+        color: animalData[i].color,
+      });
+    }
     this.animals = [...this.animals, ...createAnimalData];
 
     return createAnimalData;
   }
 
-  public async updateAnimal(animalData: CreateAnimalDto): Promise<Animal> {
-    if (!animalData) throw new Error('Invalid animalData');
-    const findAnimal: Animal | undefined = this.animals.find(animal => animal.animal === animalData.animal);
-    if (!findAnimal) throw new Error(`Can't find animal '${animalData.animal}'`);
+  public async updateAnimal(id: number, animalData: CreateAnimalDto): Promise<Animal> {
+    if (!Object.entries(animalData).length) throw new Error('Invalid animalData');
+    let findAnimal: Animal = this.animals.find(animal => animal.id === id);
+    if (!findAnimal) throw new Error(`Can't find animal with id: '${id}'`);
 
-    const updateAnimalData: Animal[] = this.animals;
-    const index: number = updateAnimalData.findIndex(animal => animal.animal === animalData.animal);
-    updateAnimalData[index] = animalData;
+    findAnimal = this.animals.find(animal => animal.animal === animalData.animal && animal.color === animalData.color);
+    if (findAnimal) throw new Error(`Animal '${animalData.animal}' is already listed`);
 
-    return updateAnimalData[index];
+    const index: number = this.animals.findIndex(animal => animal.id === id);
+    const updateAnimal = this.animals[index];
+    this.animals[index] = { ...updateAnimal, ...animalData };
+
+    return this.animals[index];
   }
 
-  public async deleteAnimal(animalData: CreateAnimalDto): Promise<Animal[]> {
-    if (!animalData) throw new Error('Invalid animalData');
+  public async deleteAnimal(id: number): Promise<Animal> {
+    const findAnimal: Animal = this.animals.find(animal => animal.id === id);
+    if (!findAnimal) throw new Error(`Can't find animal with id: '${id}'`);
 
-    const findAnimal: Animal | undefined = this.animals.find(animal => animal.animal === animalData.animal);
-    if (!findAnimal) throw new Error(`Can't find animal '${animalData.animal}'`);
+    this.animals = this.animals.filter(animal => animal.id !== id);
 
-    const deleteAnimalData: Animal[] = this.animals.filter(animal => animal.animal !== animalData.animal);
-
-    return deleteAnimalData;
+    return findAnimal;
   }
 }
 
